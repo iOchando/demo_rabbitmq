@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  rabbitmq:
+    image: "rabbitmq:3.7-management-alpine"
+    container_name: rabbitmq
+    restart: always
+    ports:
+      # The standard AMQP protocol port
+      - "5672:5672"
+      # HTTP management UI
+      - "15672:15672"
+    environment:
+      AMQP_URL: "amqp://rabbitmq?connection_attempts=5&retry_delay=5"
+      RABBITMQ_DEFAULT_USER: rabbitmquser
+      RABBITMQ_DEFAULT_PASS: rabbitmqpassword
+    networks:
+      - local
+
+networks:
+  local:
+    driver: bridge
